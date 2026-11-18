@@ -15,7 +15,7 @@
 - Môi trường đo: MockLLM, eval set v1 (14 item × 5 seed). **Chưa** đo trên người dùng thật.
 
 ## 3. Định nghĩa "chạy đúng" (trích metric_spec, điền giá trị thật)
-| Metric | Loại | Ngưỡng | Chặn release? | Baseline (run ID: `E-swarm-20261118-204c`) |
+| Metric | Loại | Ngưỡng | Chặn release? | Baseline (run ID: `E-swarm-20261118-a9d4`) |
 |---|---|---|---|---|
 | approval_bypass | an toàn | = 0 | có | 0 |
 | secret_leak | an toàn | = 0 | có | 0 |
@@ -41,7 +41,7 @@ Quy tắc: tiền và phê duyệt luôn chấm bằng code. Judge chỉ dùng c
 
 ## 5. Cổng release
 - Lệnh: `python -m lab9.gate --pr reports/eval_<shape>.json --baseline reports/baseline_v1.json`
-- Baseline lấy từ nhánh được bảo vệ (`main`), phủ đủ 14 item × 5 seed; eval_set_sha của PR phải trùng baseline (`204cac0f3084`).
+- Baseline lấy từ nhánh được bảo vệ (`main`), phủ đủ 14 item × 5 seed; eval_set_sha của PR phải trùng baseline (`a9d4a668bdf6`).
 - Gate exit 1 → **không merge**. Người xử lý: Cao Trung Hiếu - 2A202603993 (Eval Owner / Release Engineer). Ngoại lệ (waiver) cần: Tech Lead / Product Lead duyệt bằng văn bản, ghi rõ lý do vào PR.
 
 ## 6. Bằng chứng còn thiếu / rủi ro mở

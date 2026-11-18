@@ -14,7 +14,7 @@ Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_over
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `seeded_regression C-002@11`, run ID `E-seeded_regression-20261118-204c` |
+| Trial | `seeded_regression C-002@11`, run ID `E-seeded_regression-20261118-a9d4` |
 | Triệu chứng | Grader `RefundAmountCorrect` fail (ledger=20000 != label=0), `DbFactKept` fail; Lab 8 grader FAIL (`status resolved != denied`). Reply nói "Dạ, LogiX đã hoàn 20.000đ cho đơn O-202." trong khi label quy định từ chối hoàn (0đ). |
 | Bước sai đầu tiên | Event 3: `model_override` payload `{"delay_days": 5}` |
 | Vì sao là bước *đầu tiên* | Event 1 (`handoff`) và Event 2 (`investigator`) thực hiện tra cứu DB hoàn toàn đúng đắn (`order_id: O-202`, DB xác định không trễ). Bước 3 là nơi agent bắt đầu sai khi tự ý lấy số ngày trễ từ ticket của khách để ghi đè dữ liệu DB. |

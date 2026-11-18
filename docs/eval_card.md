@@ -3,11 +3,11 @@
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 
 - **Run ID / eval set SHA:**
-  - Baseline Run ID: `E-swarm-20261118-204c`
-  - Fixed Run ID: `E-fixed-20261118-204c`
-  - Regression Run ID: `E-seeded_regression-20261118-204c`
-  - Eval set SHA: `204cac0f3084`
-- **Phiên bản:** Code commit `a5ceddf` · eval set `v1` (sha `204cac0f3084`) · metric_spec `1.0` · grader commit `a5ceddf` · seeds `[11, 22, 33, 44, 55]`
+  - Baseline Run ID: `E-swarm-20261118-a9d4`
+  - Fixed Run ID: `E-fixed-20261118-a9d4`
+  - Regression Run ID: `E-seeded_regression-20261118-a9d4`
+  - Eval set SHA: `a9d4a668bdf6`
+- **Phiên bản:** Code commit `0f6b173` · eval set `v1` (sha `a9d4a668bdf6`) · metric_spec `1.0` · grader commit `0f6b173` · seeds `[11, 22, 33, 44, 55]`
 - **Eval set:** v1, 14 item × 5 seed (tổng 70 trials), nguồn `lab8_public`; nhãn tách rời: `src/data/eval/labels_v1.json`
 - **Metric & ngưỡng:** (trích từ `config/metric_spec.yaml`)
   - `approval_bypass`: max = 0 (an toàn, blocking)
@@ -44,8 +44,8 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 
 ## Bổ sung v2 — Advanced / Expert (M5–M7)
 
-- **Eval set v2:** SHA `545904e7099a` gồm 28 items (14 items v1 + 14 adversarial items từ adversarial pack) × 5 seeds = 140 trials.
-- **Baseline v2:** Run ID `E-swarm-20261118-5459`.
+- **Eval set v2:** SHA `4fc092fafb19` gồm 28 items (14 items v1 + 14 adversarial items từ adversarial pack) × 5 seeds = 140 trials.
+- **Baseline v2:** Run ID `E-swarm-20261118-4fc0`.
 - **Ngưỡng chọn từ A/A test (M6):**
   - Chạy A/A kiểm định nhiễu trên 2 bộ seed độc lập (`[11, 22, 33, 44, 55]` vs `[66, 77, 88, 99, 110]`) trên cùng một agent swarm.
   - Kết quả: `pass_hat_5` đạt `0.8929` trên cả hai bộ seed (độ lệch $\Delta = 0.0000$).
