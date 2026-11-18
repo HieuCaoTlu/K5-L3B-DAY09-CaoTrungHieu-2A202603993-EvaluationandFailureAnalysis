@@ -38,9 +38,11 @@
 => Cài đặt các giám khảo được xây bằng code sẽ giúp bắt được các trường hợp cần sự trung thực, số đúng tuyệt đối, thậm chí các giám khảo nào còn chạy nhanh nữa, so với các giám khảo ở MD2 - thường chỉ dùng cho tiêu chí mềm, định tính
 
 **6. Gate & Bootstrap (MD4)**
+- Trước khi mang cả agent sang production, vẫn nên thêm 1 lần check LLM. Nhưng bản thân LLM có tính ngẫu nhiên, khác với Code, sẽ có trường hợp cùng câu hỏi nhưng nó có 2 cách hành văn khác nhau. 
+- Tại sao lại là 95%: khống chế rủi ro vu oan & chuẩn mực ngành và điểm cân bằng lý tưởng . Nói chung là khi quyết định xem 1 ý định nào là đúng, nên giữ lại một chút sự nghi ngờ. đó là lí do tại sao lại là 5%
 - Phần này trả lời câu hỏi: Làm sao biết bản mới tốt hơn bản cũ, chặn bản tệ trước khi release/merge PR
 - Đặt câu hỏi: giả sử bản mới điểm thấp hơn bản cũ dựa theo bộ đánh giá, nhưng liệu bản mới này thật sự kém đi
-- Giải pháp: Paired Boostrap: bắt bản cũ và bản mới làm đúng 70 bài thi giống hệt nhau, sau mỗi lần thi, sẽ tính chênh lệch giữa điểm bản mới và điểm bản cũ, bản mới đúng thì +1 điểm tiến bộ, làm sai thì -1 điểm tiến bộ. Sau đó, máy tính xáo trộn toàn bộ 70 bài thi này hàng nghìn lần để tính, với độ tin cậy 95, bảng nào tốt hơn. 
+- Giải pháp: Paired Boostrap: bắt bản cũ và bản mới làm đúng 70 bài thi giống hệt nhau, sau mỗi lần thi, sẽ tính chênh lệch giữa điểm bản mới và điểm bản cũ, bản mới đúng thì +1 điểm tiến bộ, làm sai thì -1 điểm tiến bộ. Sau đó, máy tính xáo trộn toàn bộ 70 bài thi này hàng nghìn lần để tính, với độ tin cậy 95, bảng nào tốt hơn. (sử dụng độ dao động ngẫu nhiên)
 - Khi khoảng này nằm trong khoảng âm (ví dụ `[-0.500, -0.057]`) < 0, toán học khẳng định bản mới này bị thụt lùi ko phải do ăn may hay xui
 - Khi khoảng này chạm 0 hoặc DƯƠNG, toán học khẳng định bản mới ít nhất bằng hoặc tốt hơn bản cũ.
 
@@ -51,3 +53,15 @@
 - Kết quả kiểm chứng thực tế:
   + Bản `fixed`: vượt qua toàn bộ ngưỡng, $\Delta \ge 0$, gate cho kết quả `exit 0 — merge`.
   + Bản `seeded_regression`: bị tụt điểm nặng (`pass_rate` còn 71.43%, CI âm), gate lập tức chặn lại với `exit 1 — blocked: refund_amount_correct, pass_rate, reply_ledger_match`.
+- Khóa toàn vẹn (`ci_check`): đảm bảo bản baseline phải sinh ra tự động từ nhánh chính (shape swarm) bằng script, cấm chỉnh sửa tay và cấm dùng shape khác làm baseline.
+
+**7. Nâng cao: Đề thi v2, Cổng phân lát & Chống gian lận (MD5–MD7)**
+- **MD5 (Eval set v2 & Slice Gate):**
+  + Bổ sung 14 ca tấn công hiểm hóc (adversarial pack: prompt injection, giả mạo danh tính, chính sách cũ...) vào đề thi $\to$ tổng 28 ca khiếu nại $\times$ 5 seed = 140 bài thi.
+  + Cổng phân lát (Slice Gate): một bản code có thể giữ điểm trung bình chung rất cao, nhưng lại cắn lén làm sai ở lát cắt liên quan tới tiền bạc (`money_movement`). Cổng phân lát soi riêng nhóm này và chặn đứng biến thể lỗi `slice_regression`.
+- **MD6 (Đo nhiễu A/A & pass_hat_5):**
+  + Chạy A/A test (cho cùng một con bot thi 2 bộ đề với seed khác nhau: 11..55 vs 66..110) để đo độ rung lắc ngẫu nhiên tự nhiên của LLM.
+  + Cài đặt chỉ số `pass_hat_5` (xác suất làm đúng tuyệt đối cả 5 lần chạy của 1 ca khiếu nại). Đặt ngưỡng sàn `min: 0.80` nằm ngoài dải nhiễu giúp cổng CI phát hiện và chặn đứng các agent chập chờn (`flaky_regression`).
+- **MD7 (Chống gian lận & Bẫy Traps):**
+  + Cài đặt `integrity_check` như một ổ khóa chống gian lận: chặn đứng 100% các hành vi làm đẹp số liệu báo cáo như: biến lỗi thành NaN, xóa bớt các bài thi bị trượt (`dropped_failing_rows`), chọn lọc seed điểm cao (`cherry_picked_seeds`), hoặc âm thầm hạ thấp tiêu chuẩn trong file spec (`loosened_spec`).
+  + Kết quả scorecard đạt tuyệt đối: diệt 3/3 mutant lỗi, 0 báo động giả.

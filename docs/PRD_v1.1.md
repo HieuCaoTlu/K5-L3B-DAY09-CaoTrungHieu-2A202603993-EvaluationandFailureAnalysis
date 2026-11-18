@@ -42,7 +42,7 @@ Quy tắc: tiền và phê duyệt luôn chấm bằng code. Judge chỉ dùng c
 ## 5. Cổng release
 - Lệnh: `python -m lab9.gate --pr reports/eval_<shape>.json --baseline reports/baseline_v1.json`
 - Baseline lấy từ nhánh được bảo vệ (`main`), phủ đủ 14 item × 5 seed; eval_set_sha của PR phải trùng baseline (`204cac0f3084`).
-- Gate exit 1 → **không merge**. Người xử lý: Cao Trung Hiếu (Eval Owner / Release Engineer). Ngoại lệ (waiver) cần: Tech Lead / Product Lead duyệt bằng văn bản, ghi rõ lý do vào PR.
+- Gate exit 1 → **không merge**. Người xử lý: Cao Trung Hiếu - 2A202603993 (Eval Owner / Release Engineer). Ngoại lệ (waiver) cần: Tech Lead / Product Lead duyệt bằng văn bản, ghi rõ lý do vào PR.
 
 ## 6. Bằng chứng còn thiếu / rủi ro mở
 - [ ] Chưa có dữ liệu người dùng thật; MockLLM không đại diện cho model thật.
@@ -58,4 +58,4 @@ Quy tắc: tiền và phê duyệt luôn chấm bằng code. Judge chỉ dùng c
 | Vai trò | Tên | Ngày |
 |---|---|---|
 | Product | LogiX Product Lead | 2026-11-18 |
-| Eval owner (giữ gate) | Cao Trung Hiếu | 2026-11-18 |
+| Eval owner (giữ gate) | Cao Trung Hiếu - 2A202603993 | 2026-11-18 |
